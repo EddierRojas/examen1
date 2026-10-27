@@ -1,42 +1,66 @@
-/* =========================================================================
-   TODO [F5] Maquetación responsiva (mobile first)
-
-   Requisitos:
-   1. .layout
-      - Ancho máximo de 1200px, centrado, con margen interior de 1rem.
-      - En pantallas pequeñas: una sola columna (formulario arriba, listado abajo).
-      - Desde 900px: dos columnas con CSS Grid — formulario de 320px y listado
-        con el resto del espacio. Separación entre columnas de 1.5rem.
-   2. .panel-form
-      - Desde 900px debe quedarse fijo al desplazarse (position: sticky),
-        alineado al inicio de su celda.
-   3. .lista-equipos
-      - Sin viñetas, sin margen ni relleno por omisión.
-      - CSS Grid con tantas columnas como quepan, cada una de mínimo 220px
-        (sin media query: use auto-fill y minmax).
-   4. .barra-listado y .paginacion
-      - Flexbox: elementos en los extremos y centrados verticalmente.
-      - La barra puede pasar a dos líneas si no cabe.
-   5. Ningún elemento debe provocar desplazamiento horizontal a 360px de ancho.
-   ========================================================================= */
-
+/* TODO [F5] Distribución responsive del formulario y el inventario. */
 .layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-.panel-form {
-}
-
+.panel-form,
 .panel-listado {
+  min-width: 0;
 }
 
 .barra-listado {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .lista-equipos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.lista-equipos > li {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .paginacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
 }
 
 @media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 320px minmax(0, 1fr);
+    column-gap: 1.5rem;
+    align-items: start;
+  }
+
+  .panel-form {
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+  }
+}
+
+@media (max-width: 399px) {
+  .app-header { flex-wrap: wrap; }
+  .paginacion { justify-content: center; }
+  .paginacion .btn { padding-inline: 0.55rem; }
 }
